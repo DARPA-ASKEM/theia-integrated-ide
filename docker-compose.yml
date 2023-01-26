@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  theia:
+    container_name: theia
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
