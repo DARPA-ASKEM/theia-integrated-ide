@@ -1,11 +1,9 @@
-FROM node
+FROM node:17
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
-    bison \
     curl \
     build-essential \
-    gawk \
     libssl-dev \
     libbz2-dev \
     libreadline-dev \
@@ -25,18 +23,10 @@ RUN apt-get update && apt-get upgrade -y && \
     pip3 install python-language-server flake8 autopep8 && \
     apt-get clean && apt-get auto-remove -y
 
-# RUN mkdir $HOME/glibc/ && cd $HOME/glibc && \
-#     wget http://ftp.gnu.org/gnu/libc/glibc-2.34.tar.gz && \
-#     tar -xvzf glibc-2.34.tar.gz && \
-#     mkdir build && \
-#     mkdir glibc-2.34-install && \
-#     cd build && \
-#     ~/glibc/glibc-2.34/configure --prefix=$HOME/glibc/glibc-2.34-install && \
-#     make && \
-#     make install
-
 COPY . /theia
 WORKDIR /theia
-RUN yarn build
+RUN yarn && yarn build
+
+EXPOSE 3001
 
 CMD ["yarn", "start"]
